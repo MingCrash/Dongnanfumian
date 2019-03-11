@@ -26,7 +26,7 @@ MONGO_DB_NAME = 'DongnanFumian'
 
 #   splash configuration
 # SPLASH_URL = 'http://127.0.0.1:8050'
-SPLASH_URL = 'http://45.76.156.88:8050'
+SPLASH_URL = 'http://182.61.172.116:8050'
 # DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 HTTPCACHE_STORAGE ='scrapy_splash.SplashAwareFSCacheStorage'
 SPLASH_LOG_400 = True
