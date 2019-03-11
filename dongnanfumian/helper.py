@@ -17,6 +17,7 @@ def get_localtimestamp():
 def get_makedtime(format,timestamp):
     return time.strftime(format, time.localtime(int(timestamp)))
 
+#{key1:value1,key2:value2} -> key1=value1&key2=value2
 def getUrlWithPars(dict):
     str = []
     for i in dict.keys():

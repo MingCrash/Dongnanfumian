@@ -63,8 +63,6 @@ class EeoComCnSpider(scrapy.Spider):
 
 
     def parse(self, response):
-
-
         data = json.loads(response.text)
 
         for i in data['resultList']:
@@ -86,8 +84,9 @@ class EeoComCnSpider(scrapy.Spider):
             otherStyleTime2 = time.strftime("%Y-%m-%d %H:%M:%S", timeArray2)
             self.updateTime = otherStyleTime2
             self.content_parse()
-    def  content_parse(self):
 
+
+    def  content_parse(self):
         pipleitem = DongnanfumianItem()
 
         pipleitem['id'] =  self.newsId
@@ -98,6 +97,3 @@ class EeoComCnSpider(scrapy.Spider):
         pipleitem['updateTime'] = self.updateTime
 
         return pipleitem
-
-
-

@@ -16,7 +16,6 @@ class EeoComCnSpider(scrapy.Spider):
         '东南汽车': 10
     }
 
-
     headers = {
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
         'accept-encoding': 'gzip',  # 只要gzip的压缩格式
@@ -84,6 +83,4 @@ class EeoComCnSpider(scrapy.Spider):
         pipleitem['pub_time'] = self.pub_time
 
         return pipleitem
-
-
 
