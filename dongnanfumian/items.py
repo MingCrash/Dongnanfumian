@@ -9,16 +9,15 @@ import scrapy
 
 
 class DongnanfumianItem(scrapy.Item):
-    # define the fields for your item here like:
-    id = scrapy.Field()       #S0
-    url = scrapy.Field()      #S1
-    webname = scrapy.Field()   #S2
-    type = scrapy.Field()      #S3a
-    natvigate = scrapy.Field()  #S3d
-    content = scrapy.Field()    #Q1
-    title = scrapy.Field()     #S4
-    crawltime = scrapy.Field()   #S5
-    date = scrapy.Field()     #S6
-    platform = scrapy.Field()  #S7
-    author = scrapy.Field()    #G1
 
+    S0 = scrapy.Field()  # S0 id
+    S1 = scrapy.Field()  # S1 url
+    S2 = scrapy.Field()  # S2 webname
+    S3a = scrapy.Field()  # S3a type
+    S3d = scrapy.Field()  # S3d natvigate
+    Q1 = scrapy.Field()  # Q1 content
+    S4 = scrapy.Field()  # S4 title
+    S5 = scrapy.Field()  # S5 crawl_time
+    S6 = scrapy.Field()  # S6  date
+    S7 = scrapy.Field()  # S7 platform
+    G1 = scrapy.Field()  # G1 author

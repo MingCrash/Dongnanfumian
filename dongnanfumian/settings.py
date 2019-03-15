@@ -18,37 +18,50 @@ NEWSPIDER_MODULE = 'dongnanfumian.spiders'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'dongnanfumian (+http://www.yourdomain.com)'
 
-#   MongoDB configuration
-MONGO_DB_URI = 'mongodb://45.76.156.88:27017'
+KEYWORDS = {
+        '东南 四川菱威':1,
+        '东南 倒下':1,
+        '东南 权斗':1,
+        '东南经销商 盈利':1,
+        '东南 退网':1,
+        '追随东南汽车10多年的四川菱威轰然倒下':1,
+        '东南汽车内部权斗升级，经销商盈利无望开始退网':1,
+}
+
+
+#   --------------------------MongoDB configuration --------------------------
+MONGO_DB_URI = 'mongodb://192.168.0.48:27017'
 # MONGO_DB_URI = 'mongodb://127.0.0.1:27017'
 # MONGO_DB_URI = 'mongodb://182.61.172.116:27017'
 MONGO_DB_NAME = 'DongnanFumian'
+# ------------------------------------------------------------------------------
 
-#   splash configuration
+#   --------------------------splash configuration --------------------------
 # SPLASH_URL = 'http://127.0.0.1:8050'
 SPLASH_URL = 'http://182.61.172.116:8050'
 # DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 HTTPCACHE_STORAGE ='scrapy_splash.SplashAwareFSCacheStorage'
 SPLASH_LOG_400 = True
+# ------------------------------------------------------------------------------
 
-#   Redis configuration
+
+#   --------------------------Redis configuration --------------------------
 # REDIS_URL = 'redis://127.0.0.1:6379'
-REDIS_URL = 'redis://45.76.156.88:6379'
+REDIS_URL = 'redis://192.168.0.48:6379'
 # 增加了调度的配置,把请求对象存储到Redis数据, 从而实现请求的持久化.
-SCHEDULER = 'scrapy_redis.scheduler.Scheduler'
+SCHEDULER = "scrapy_redis_bloomfilter.scheduler.Scheduler"
 # 增加了一个去重容器类的配置, 作用使用Redis的set集合来存储请求的指纹数据, 从而实现请求去重的持久化
-DUPEFILTER_CLASS = 'scrapy_redis.dupefilter.RFPDupeFilter'
+DUPEFILTER_CLASS = "scrapy_redis_bloomfilter.dupefilter.RFPDupeFilter"
 DUPEFILTER_DEBUG = False
-SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.PriorityQueue'
+SCHEDULER_QUEUE_CLASS = 'scrapy_redis_bloomfilter.queue.PriorityQueue'
 SCHEDULER_PERSIST = True
+# ------------------------------------------------------------------------------
 
 FEED_EXPORT_ENCODING = 'utf-8'
-LOG_LEVEL = "INFO"
+# LOG_LEVEL = "INFO"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
-
-
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -83,7 +96,7 @@ SPIDER_MIDDLEWARES = {
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-#    'dongnanfumian.middlewares.DongnanfumianDownloaderMiddleware': 543,
+   # 'dongnanfumian.middlewares.DongnanfumianDownloaderMiddleware': 543,
     'scrapy_splash.SplashCookiesMiddleware': 723,
     'scrapy_splash.SplashMiddleware': 725,
     'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
