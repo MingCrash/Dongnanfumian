@@ -4,6 +4,7 @@ import time
 import requests
 import json
 import scrapy
+from scrapy import Request
 from scrapy.conf import settings
 from dongnanfumian import helper
 from dongnanfumian.items import DongnanfumianItem
@@ -16,7 +17,7 @@ class CnewsQqComSpider(scrapy.Spider):
     keywords = settings.get('KEYWORDS')
 
     headers = {
-        'Host': 'r.cnews.qq.com',
+        # 'Host': 'r.cnews.qq.com',
         'Accept-Encoding': 'gzip,deflate',
         'Referer': 'http/cnews.qq.com/cnews/android/',
         'User-Agent': '%E5%A4%A9%E5%A4%A9%E5%BF%AB%E6%8A%A55010(android)',
@@ -28,7 +29,6 @@ class CnewsQqComSpider(scrapy.Spider):
         'Content-Type': 'application/x-www-form-urlencoded',
         'Connection': 'Keep-Alive',
         'Content-Length': '1247'
-
     }
 
     payload = {
@@ -111,43 +111,9 @@ class CnewsQqComSpider(scrapy.Spider):
                    end
                    """
 
-    def start_requests(self):
-        for i in self.keywords.keys():
-            for j in range(self.keywords[i]):
-                self.payload['query'] = i
-                self.payload['page'] = str(j)
-                url = "https://r.cnews.qq.com/searchByType?devid=A000009114F247"
-                resb = requests.post(url=url, data=self.payload, headers=self.headers)
-                time.sleep(2)
-                body = json.loads(resb.text)
-                for i in body['new_list']['data']:
-                    if 'article' in i.keys():
-                        id = i['article']['id']
-                        date = i['article']['time']
-                        title = i['article']['title']
-                        author = i['article']['source']
-                        time.sleep(1)
-                        if 'url' in i['article'].keys():
-                            resb2 = requests.post(url=i['article']['url'])
-                            pipleitem = DongnanfumianItem()
-                            selector = etree.HTML(resb2.text)
-                            pipleitem['S6'] = date
-                            pipleitem['S0'] = id
-                            pipleitem['S1'] = i['article']['url']
-                            pipleitem['S4'] = title
-                            pipleitem['S3a'] = '文章'
-                            pipleitem['G1'] = author
-                            pipleitem['S3d'] = None
-                            pipleitem['S7'] = "APP"
-                            pipleitem['S2'] = '天天快报'
-                            pipleitem['Q1'] = selector.xpath('string(//div[@class="content-box"])')
-                            pipleitem['S5'] = helper.get_localtimestamp()
-
-                            print(pipleitem)
-
     # def start_requests(self):
-    #     for i in self.keywoerds:
-    #         for j in range(10):
+    #     for i in self.keywords.keys():
+    #         for j in range(self.keywords[i]):
     #             self.payload['query'] = i
     #             self.payload['page'] = str(j)
     #             url = "https://r.cnews.qq.com/searchByType?devid=A000009114F247"
@@ -156,33 +122,63 @@ class CnewsQqComSpider(scrapy.Spider):
     #             body = json.loads(resb.text)
     #             for i in body['new_list']['data']:
     #                 if 'article' in i.keys():
-    #                     if 'id' in i['article'].keys():
-    #                         id = i['article']['id']
-    #                     if 'time' in i['article'].keys():
-    #                         date = i['article']['time']
-    #                     if 'title' in i['article'].keys():
-    #                         title = i['article']['title']
-    #                     if 'source' in i['article'].keys():
-    #                         author = i['article']['source']
+    #                     id = i['article']['id']
+    #                     date = i['article']['time']
+    #                     title = i['article']['title']
+    #                     author = i['article']['source']
     #                     time.sleep(1)
     #                     if 'url' in i['article'].keys():
-    #                         yield Request(url=i['article']['url'],callback=self.content_parse,headers=self.headers,
-    #                                       meta={'id':id,'date':date,'title':title,'author':author})
+    #                         resb2 = requests.post(url=i['article']['url'])
+    #                         pipleitem = DongnanfumianItem()
+    #                         selector = etree.HTML(resb2.text)
+    #                         pipleitem['S6'] = date
+    #                         pipleitem['S0'] = id
+    #                         pipleitem['S1'] = i['article']['url']
+    #                         pipleitem['S4'] = title
+    #                         pipleitem['S3a'] = '文章'
+    #                         pipleitem['G1'] = author
+    #                         pipleitem['S3d'] = None
+    #                         pipleitem['S7'] = "APP"
+    #                         pipleitem['S2'] = '天天快报'
+    #                         pipleitem['Q1'] = selector.xpath('string(//div[@class="content-box"])')
+    #                         pipleitem['S5'] = helper.get_localtimestamp()
     #
-    # def content_parse(self, response):
-    #     pipleitem = DongnanfumianItem()
-    #
-    #     pipleitem['S6'] = response.meta['date']
-    #     pipleitem['S0'] = id
-    #     pipleitem['S1'] = response.url
-    #     pipleitem['S4'] = response.meta['title']
-    #     pipleitem['S3a'] = '文章'
-    #     pipleitem['G1'] = response.meta['author']
-    #     pipleitem['S3d'] = None
-    #     pipleitem['S7'] = "APP"
-    #     pipleitem['S2'] = '天天快报'
-    #     pipleitem['Q1'] = response.xpath('string(//div[@class="content-box"])').extract()
-    #     pipleitem['S5'] = helper.get_localtimestamp()
-    #
-    #     # return pipleitem
-    #     print(pipleitem)
+    #                         print(pipleitem)
+                            # return pipleitem
+
+    def start_requests(self):
+        for i in self.keywords.keys():
+            for j in range(self.keywords[i]):
+                self.payload['query'] = i
+                self.payload['page'] = str(j)
+                url = "https://r.cnews.qq.com/searchByType?devid=A000009114F247"
+                resb = requests.post(url=url, data=self.payload, headers=self.headers)
+                body = json.loads(resb.text)
+                for i in body['new_list']['data']:
+                    if 'article' in i.keys():
+                        id=date=title=author=None
+                        if 'id' in i['article'].keys():id = i['article']['id']
+                        if 'time' in i['article'].keys():date = i['article']['time']
+                        if 'title' in i['article'].keys():title = i['article']['title']
+                        if 'source' in i['article'].keys():author = i['article']['source']
+                        if 'url' in i['article'].keys():
+                            yield Request(url=i['article']['url'],callback=self.content_parse,headers=self.headers,
+                                          meta={'id':id,'date':date,'title':title,'author':author})
+
+    def content_parse(self, response):
+        pipleitem = DongnanfumianItem()
+
+        pipleitem['S6'] = response.meta['date']
+        pipleitem['S0'] = response.meta['id']
+        pipleitem['S1'] = response.url
+        pipleitem['S4'] = response.meta['title']
+        pipleitem['S3a'] = '文章'
+        pipleitem['G1'] = response.meta['author']
+        pipleitem['S3d'] = None
+        pipleitem['S7'] = "APP"
+        pipleitem['S2'] = '天天快报'
+        pipleitem['Q1'] = response.xpath('string(//div[@class="content-box"])').extract()
+        pipleitem['S5'] = helper.get_localtimestamp()
+
+        return pipleitem
+        # print(pipleitem)

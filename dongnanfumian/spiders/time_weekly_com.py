@@ -11,7 +11,6 @@ from scrapy_redis_bloomfilter.queue import PriorityQueue
 class TimeWeeklyComSpider(scrapy.Spider):
     name = 'time.weekly.com'
     allowed_domains = ['app.time-weekly.com']
-    # start_urls = ['http://http://app.time-weekly.com/timefinance/news/search/net/']
 
     keywords = settings.get('KEYWORDS')
 

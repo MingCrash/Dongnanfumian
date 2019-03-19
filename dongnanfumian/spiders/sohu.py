@@ -10,10 +10,8 @@ from scrapy import Request
 # 搜狐新闻app  {"code":91000,"msg":"empty data list"} 没数据
 class EeoComCnSpider(scrapy.Spider):
     name = 'api.k.sohu.com'
-    # allowed_domains = ['https://api.k.sohu.com/api/search/v5/search.go']
 
     keywords = settings.get('KEYWORDS')
-
 
     querystring = {"rt": "json", "pageNo": "2", "words": "思域", "p1": "NjUwOTMxNTExMjU1NjczNjUzOA%3D%3D",
                    "pageSize": "20", "type": "0", "gid": "x011060802ff0f509854f181600023703a473ca12949",

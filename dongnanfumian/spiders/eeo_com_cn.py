@@ -11,7 +11,6 @@ class EeoComCnSpider(scrapy.Spider):
     name = 'eeo.com.cn'
     allowed_domains = ['eeo.com.cn']
 
-    # entry_point = 'http://app.eeo.com.cn/?app=search&controller=index&action=searchall&w={kw}&p=1'
     entry_point = 'http://app.eeo.com.cn/?app=search&controller=index&action=searchall'
 
     keywords = settings.get('KEYWORDS')

@@ -58,7 +58,7 @@ SCHEDULER_PERSIST = True
 # ------------------------------------------------------------------------------
 
 FEED_EXPORT_ENCODING = 'utf-8'
-# LOG_LEVEL = "INFO"
+LOG_LEVEL = "INFO"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
